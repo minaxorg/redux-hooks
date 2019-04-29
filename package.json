@@ -10,9 +10,17 @@
     "build:types": "tsc --emitDeclarationOnly",
     "build:js": "babel src --out-dir lib --extensions \".ts,.tsx\" --source-maps inline"
   },
-  "keywords": [],
-  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/minaxorg/redux-hooks.git"
+  },
+  "keywords": ["redux", "redux-hooks", "react"],
+  "author": "kaijun",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/minaxorg/redux-hooks/issues"
+  },
+  "homepage": "https://github.com/minaxorg/redux-hooks#readme",
   "devDependencies": {
     "@babel/cli": "^7.4.4",
     "@babel/core": "^7.4.4",
