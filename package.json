@@ -37,9 +37,5 @@
   },
   "peerDependencies": {
     "react": ">=16.8.0"
-  },
-  "dependencies": {
-    "@types/react": "^16.8.14",
-    "react": "^16.8.6"
   }
 }

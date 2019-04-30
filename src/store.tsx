@@ -48,11 +48,20 @@ const injectLoadingInReducer = (reducer: any) => {
   }
 }
 
+export interface State { [key: string]: any }
+export interface Action { error?: boolean; type: string; payload?: any }
+export interface Actions {
+  [key: string]: (...args: any) => (Promise<any> | any)
+}
+
 const Provider = (
   props: {
-    reducer: <T>(state: T, action: { error?: boolean; type: string; payload?: any }) => T;
-    actions: any;
-    store: { [key: string]: any };
+    reducer: (
+      state: State,
+      action: Action
+    ) => State;
+    actions: Actions;
+    store: State;
     children: any;
     additions?: string[]
   }
