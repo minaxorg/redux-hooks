@@ -11,6 +11,8 @@ npm i --save @minax/redux-hooks
 
 [![Edit lpl933nv5m](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/lpl933nv5m?fontsize=14)
 
+## TypeScript
+
 ### Augmenting your props using `ReduxComponentProps`
 
 ``` typescript
@@ -21,4 +23,16 @@ interface Props extends ReduxComponentProps<StoreInterface, ActionsInterface> {
   bar: any
 }
 ```
+
+### Create action keys in reducer function using `createReducerKey`
+
+``` typescript
+import { createReducerKey } from '@minax/redux-hooks'
+
+const actions = {
+  test: () => true
+}
+```
+
+`createReducerKey(actions)` will return `{ test: 'test' }`
 
