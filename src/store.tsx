@@ -14,37 +14,47 @@ const injectLoadingInStore = (store: any) => {
   }
 }
 
-const injectLoadingInReducer = (reducer: any) => {
-  return (state: any, action: any) => {
-    switch (action.type) {
-      case '@@loading/start':
-        return {
-          ...state,
-          loading: {
-            global: true,
-            effects: {
-              ...state.loading.effects,
-              [action.payload]: true
+class ReducerWithLoading {
+  reducer: any
+  static instance: any
+  constructor (reducer: any) {
+    this.reducer = reducer
+  }
+  getInstance () {
+    if (!ReducerWithLoading.instance) {
+      ReducerWithLoading.instance = (state: any, action: any) => {
+        switch (action.type) {
+          case '@@loading/start':
+            return {
+              ...state,
+              loading: {
+                global: true,
+                effects: {
+                  ...state.loading.effects,
+                  [action.payload]: true
+                }
+              }
             }
-          }
+          case '@@loading/end':
+            const effectsStatus = {
+              ...state.loading.effects,
+              [action.payload]: false
+            }
+            // 所有的key都为false
+            const allFalse = Object.keys(effectsStatus).every(key => !effectsStatus[key])
+            return {
+              ...state,
+              loading: {
+                global: !allFalse,
+                effects: effectsStatus
+              }
+            }
+          default:
+            return this.reducer(state, action)
         }
-      case '@@loading/end':
-        const effectsStatus = {
-          ...state.loading.effects,
-          [action.payload]: false
-        }
-        // 所有的key都为false
-        const allFalse = Object.keys(effectsStatus).every(key => !effectsStatus[key])
-        return {
-          ...state,
-          loading: {
-            global: !allFalse,
-            effects: effectsStatus
-          }
-        }
-      default:
-        return reducer(state, action)
+      }
     }
+    return ReducerWithLoading.instance
   }
 }
 
@@ -66,7 +76,7 @@ const Provider = (
   const haveLoading = props.additions && props.additions.find(i => i === 'loading')
 
   const store = useReducer(
-    haveLoading ? injectLoadingInReducer(props.reducer) : props.reducer,
+    haveLoading ? new ReducerWithLoading(props.reducer).getInstance() : props.reducer,
     haveLoading ? injectLoadingInStore(props.store) : props.store
   )
   return (
