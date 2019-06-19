@@ -11,28 +11,6 @@ npm i --save @minax/redux-hooks
 
 [![Edit lpl933nv5m](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/lpl933nv5m?fontsize=14)
 
-## TypeScript
-
-### Augmenting your props using `ReduxComponentProps`
-
-``` typescript
-import { ReduxComponentProps } from '@minax/redux-hooks'
-
-interface Props extends ReduxComponentProps<StoreInterface, ActionsInterface> {
-  foo: any
-  bar: any
-}
-```
-
-### Create action keys in reducer function using `createReducerKey`
-
-``` typescript
-import { createReducerKey } from '@minax/redux-hooks'
-
-const actions = {
-  test: () => true
-}
-```
-
-`createReducerKey(actions)` will return `{ test: 'test' }`
+## Notice
+`1.3.0` has some break changes, If you update to this version, please see the online demo above to update your code.
 
