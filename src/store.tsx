@@ -4,6 +4,8 @@ import createActions from './createActions'
 
 const StoreContext: React.Context<{ state: any, actions: any }> = createContext(undefined) as any
 
+const getStoreContext = <S, A>(): React.Context<{ state: S, actions: A }> => StoreContext
+
 const injectLoadingInStore = (store: any) => {
   return {
     ...store,
@@ -58,17 +60,27 @@ class ReducerWithLoading {
   }
 }
 
-export interface State { [key: string]: any }
-export interface Action { error?: boolean; type: string; payload?: any }
+interface State { [key: string]: any }
+interface Action<T> { error?: boolean; type: keyof T; payload?: any }
+
+interface Actions {
+  [name: string]: (args?: any) => any
+}
+
+/**
+ * S: interface of store
+ * 
+ * A: type of actions (`typeof actions`)
+ */
+export interface createReducer<S, A>  {
+  (state: S, action: Action<A>): S
+}
 
 const Provider = (
   props: {
-    reducer: (
-      state: any,
-      action: Action
-    ) => State;
-    actions: any;
-    store: State;
+    reducer: (state: any, action: any) => any ;
+    actions: { [name: string]: (args: any) => any };
+    store: { [key: string]: any };
     children: any;
     additions?: string[]
   }
@@ -103,7 +115,13 @@ const connect = (Cpt: any) => {
   }
 }
 
+export interface InjectProps<S = State, A = Actions> {
+  state: S,
+  actions: A
+}
+
 export {
+  getStoreContext,
   connect,
   Provider,
   StoreContext
