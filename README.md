@@ -12,5 +12,5 @@ npm i --save @minax/redux-hooks
 [![Edit lpl933nv5m](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/lpl933nv5m?fontsize=14)
 
 ## Notice
-`1.2.0` has some break changes, If you update to this version, please see the online demo above to update your code.
+`^1.2.1` has some break changes, but still backward compatibility. If you update to this version,please see the online demo above to update your code if you want.
 
